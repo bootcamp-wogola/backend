@@ -13,7 +13,8 @@ SETTINGS = get_settings()
 
 ENGINE = create_async_engine(
     url=SETTINGS.DATABASE_URL,
-    echo=SETTINGS.DEBUG
+    echo=SETTINGS.DEBUG,
+    connect_args={'check_same_thread' : False}, # JUST FOR SQLITE
 )
 
 ASYNC_SESSION = async_sessionmaker(

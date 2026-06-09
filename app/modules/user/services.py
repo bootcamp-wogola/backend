@@ -1,6 +1,6 @@
 from sqlalchemy import select
 from .model import User
-
+from app.core.security import get_password_hash
 
 #GET
 async def get_user_by_id(db, user_id: int):
@@ -23,7 +23,7 @@ async def create_user(db, user):
     new_user = User(
         username=user.username,
         email=user.email,
-        password=user.password,
+        password=get_password_hash(user.password),
         role=user.role
     )
     db.add(new_user)
