@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.database import get_db
-from app.core.exceptions import Conflict, Forbidden, NotFound
-from app.core.security import get_current_user
+from src.core.database import get_db
+from src.core.exceptions import Conflict, Forbidden, NotFound
+from src.core.security import get_current_user
 from . import services
 from .model import User
 from .schemas import UserCreate, UserGet, UserUpdate

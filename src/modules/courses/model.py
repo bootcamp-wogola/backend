@@ -1,6 +1,6 @@
 from sqlalchemy import String, JSON
 from sqlalchemy.orm import Mapped, mapped_column
-from app.core.database import Base
+from src.core.database import Base
 
 
 class Courses(Base):

@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-from app.modules.user.routers import user_router
-from app.modules.auth.router import auth_router
-from app.modules.courses.routers import router as courses_router
+from src.modules.user.routers import user_router
+from src.modules.auth.router import auth_router
+from src.modules.courses.routers import router as courses_router
 
 v1_router = APIRouter(prefix='/v1')
 

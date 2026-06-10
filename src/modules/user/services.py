@@ -1,6 +1,6 @@
 from sqlalchemy import select
 from .model import User
-from app.core.security import get_password_hash
+from src.core.security import get_password_hash
 
 #GET
 async def get_user_by_id(db, user_id: int):

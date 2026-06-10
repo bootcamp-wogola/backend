@@ -8,8 +8,8 @@ os.environ.setdefault("DATABASE_URL", "sqlite+aiosqlite:///./test.db")
 os.environ.setdefault("SECRET_KEY", "test-secret")
 os.environ.setdefault("ALGORITHM", "HS256")
 
-from app.core.database import Base, get_db
-from app.main import app
+from src.core.database import Base, get_db
+from src.main import app
 
 
 @pytest_asyncio.fixture
@@ -39,8 +39,8 @@ async def client(session_maker):
         async with session_maker() as session:
             yield session
 
-    app.dependency_overrides[get_db] = override_get_db
+    src.dependency_overrides[get_db] = override_get_db
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as http_client:
         yield http_client
-    app.dependency_overrides.clear()
+    src.dependency_overrides.clear()

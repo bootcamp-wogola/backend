@@ -7,7 +7,7 @@ from jose.exceptions import JWTError
 from pwdlib import PasswordHash
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.modules.user.model import User, UserRole
+from src.modules.user.model import User, UserRole
 from .database import get_db
 from .settings import get_settings
 

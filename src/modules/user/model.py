@@ -2,7 +2,7 @@ from datetime import datetime
 from sqlalchemy import func
 from enum import Enum
 from sqlalchemy.orm import Mapped, mapped_column
-from app.core.database import Base
+from src.core.database import Base
 
 
 class UserRole(str, Enum):
