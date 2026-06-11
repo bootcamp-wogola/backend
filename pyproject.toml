@@ -1,0 +1,27 @@
+[project]
+name = "hackatown-wongola"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "23Edu4rd0",email = "eduardo.vchaves23@gmail.com"}
+]
+requires-python = ">=3.10,<4.0"
+dependencies = [
+    "fastapi[standard] (>=0.136.3,<0.137.0)",
+    "psycopg[async] (>=3.3.4,<4.0.0)",
+    "python-jose (>=3.5.0,<4.0.0)",
+    "pwdlib (>=0.3.0,<0.4.0)",
+    "sqlalchemy (>=2.0.50,<3.0.0)",
+    "alembic (>=1.18.4,<2.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "pytest (>=9.0.3,<10.0.0)",
+    "pytest-asyncio (>=1.4.0,<2.0.0)"
+]

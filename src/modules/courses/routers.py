@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from . import services, schemas
-from app.core.database import get_db
-from app.core.security import get_current_user
+from src.core.database import get_db
+from src.core.security import get_current_user
 
 router = APIRouter(prefix="/courses", tags=['Courses'])
 

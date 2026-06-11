@@ -1,7 +1,12 @@
 from sqlalchemy import select
+<<<<<<< HEAD:app/modules/user/services.py
 from .models import User, ProfessionalData
 from app.core.security import get_password_hash
 from app.core.exceptions import Conflict
+=======
+from .model import User
+from src.core.security import get_password_hash
+>>>>>>> b5272105049f09718847e2199ccf71caed8f8ae7:src/modules/user/services.py
 
 # GET
 async def get_user_by_id(db, user_id: int):
