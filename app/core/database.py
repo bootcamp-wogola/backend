@@ -1,6 +1,6 @@
-from datetime import datetime
+from datetime import date
 from typing import AsyncGenerator
-from sqlalchemy import func
+from sqlalchemy import Date, func
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
@@ -31,8 +31,9 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
 class Base(DeclarativeBase):
     id : Mapped[int] = mapped_column(primary_key=True)
     
-    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
-    updated_at: Mapped[datetime] = mapped_column(
-        server_default=func.now(), 
-        onupdate=func.now()
+    created_at: Mapped[date] = mapped_column(Date, server_default=func.current_date())
+    updated_at: Mapped[date] = mapped_column(
+        Date,
+        server_default=func.current_date(), 
+        onupdate=func.current_date()
     )

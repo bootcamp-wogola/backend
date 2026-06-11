@@ -1,12 +1,12 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
 from app.core.exceptions import Conflict, Forbidden, NotFound
 from app.core.security import get_current_user
 from . import services
-from .model import User
-from .schemas import UserCreate, UserGet, UserUpdate
+from .models import User
+from .schemas import UserCreate, UserGet, UserUpdate, ProfessionalDataUpdate, ProfessionalDataGet, ProfessionalDataBase
 
 
 user_router = APIRouter(prefix='/users', tags=['Users'])
@@ -24,6 +24,17 @@ async def read_user(
 	return user
 
 
+@user_router.get('/{user_id}/professional', response_model=ProfessionalDataGet)
+async def read_professional(
+	user_id: int,
+	session: AsyncSession = Depends(get_db)
+):
+	professional = await services.get_professional_by_id(session, user_id)
+	if not professional:
+		raise NotFound('User Professional data not found')
+	return professional
+
+
 @user_router.post('/', response_model=UserGet, status_code=201)
 async def create_user(
 	user_in: UserCreate,
@@ -34,6 +45,23 @@ async def create_user(
 		raise Conflict('Username or email already exists')
 
 	return user
+
+@user_router.post('/{user_id}/professional', status_code=201, response_model=ProfessionalDataGet)
+async def create_professional(
+	user_id: int,
+	professional_in: ProfessionalDataBase,
+	session = Depends(get_db),
+	current_user = Depends(get_current_user)
+):
+	if current_user.id != user_id:
+		raise Forbidden('User can only modify own account')
+
+	try:
+		new_profile = await services.create_professional_profile(session, user_id, professional_in)
+		return new_profile
+	
+	except ValueError as exc:
+		raise HTTPException(status_code=409, detail=str(exc))
 
 
 @user_router.patch('/{user_id}', response_model=UserGet)
@@ -55,6 +83,24 @@ async def update_user(
 		raise NotFound('User not found')
 
 	return user
+
+@user_router.patch('/{user_id}/professional', response_model=ProfessionalDataGet)
+async def update_professional(
+	user_id : int,
+	professional_in : ProfessionalDataUpdate,
+	session = Depends(get_db),
+	current_user = Depends(get_current_user)
+):
+	if current_user.id != user_id:
+		raise Forbidden('User can only modify own account')
+
+	
+	update = await services.update_professional_data(session, user_id, professional_in)
+	
+	if not update:
+		raise NotFound('Professional profile not found')
+	
+	return update
 
 
 @user_router.delete('/{user_id}', status_code=204)
