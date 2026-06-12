@@ -13,6 +13,5 @@ settings = get_settings()
 
 app = FastAPI()
 
-src.add_exception_handler(AppException, app_exception_handler)
-
-src.include_router(v1_router, prefix='/api')
+app.add_exception_handler(AppException, app_exception_handler)
+app.include_router(v1_router, prefix='/api')
