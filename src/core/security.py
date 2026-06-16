@@ -27,9 +27,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 async def authenticate_user_service(
     *, session: AsyncSession, email: str, password: str
 ) -> User | None:
-    user = await session.scalar(
-        select(User).where(User.email == email)
-    )
+    user = await session.scalar(select(User).where(User.email == email))
     if not user:
         return None
 

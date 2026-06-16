@@ -5,7 +5,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
     create_async_engine,
-    async_sessionmaker
+    async_sessionmaker,
 )
 from .settings import get_settings
 
@@ -16,10 +16,7 @@ ENGINE = create_async_engine(
     echo=SETTINGS.DEBUG,
 )
 
-ASYNC_SESSION = async_sessionmaker(
-    ENGINE,
-    expire_on_commit=False
-)
+ASYNC_SESSION = async_sessionmaker(ENGINE, expire_on_commit=False)
 
 
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
@@ -28,11 +25,11 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
 
 
 class Base(DeclarativeBase):
-    id : Mapped[int] = mapped_column(primary_key=True)
-    
-    created_at: Mapped[date] = mapped_column(Date, server_default=func.current_date())
+    id: Mapped[int] = mapped_column(primary_key=True)
+
+    created_at: Mapped[date] = mapped_column(
+        Date, server_default=func.current_date()
+    )
     updated_at: Mapped[date] = mapped_column(
-        Date,
-        server_default=func.current_date(), 
-        onupdate=func.current_date()
+        Date, server_default=func.current_date(), onupdate=func.current_date()
     )

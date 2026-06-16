@@ -9,13 +9,18 @@ ACOES_POR_HUMOR = {
     'sobrecarregado': 'Escolha só UMA tarefa pra focar agora. As outras podem esperar.',
 }
 
-async def processar_checkin(payload: schemas.SaudeRequest) -> schemas.SaudeResponse:
+
+async def processar_checkin(
+    payload: schemas.SaudeRequest,
+) -> schemas.SaudeResponse:
     humor = payload.humor.lower()
     derivar_cvv = payload.nota_semanal < 4
 
     if derivar_cvv:
         mensagem = 'Sentimos que você não está bem. Você não está sozinho(a).'
-        acao_sugerida = 'Conversar com o CVV (188) - disponível 24h, ligação gratuita.'
+        acao_sugerida = (
+            'Conversar com o CVV (188) - disponível 24h, ligação gratuita.'
+        )
         alerta = True
     else:
         mensagem = f'Olá! Vimos que você está se sentindo {humor} hoje.'

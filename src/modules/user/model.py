@@ -8,11 +8,11 @@ from src.core.database import Base
 class UserRole(str, Enum):
     ADMIN = 'admin'
     USER = 'user'
-    
+
 
 class User(Base):
     __tablename__ = 'users'
-    
+
     username: Mapped[str] = mapped_column(unique=True)
     email: Mapped[str] = mapped_column(unique=True)
     password: Mapped[str] = mapped_column(nullable=False)
@@ -25,10 +25,9 @@ class User(Base):
     country: Mapped[str] = mapped_column(nullable=False)
     state: Mapped[str] = mapped_column(nullable=True)
     city: Mapped[str] = mapped_column(nullable=False)
-    
+
     phone_number: Mapped[str] = mapped_column(nullable=True)
-    
+
     role: Mapped[UserRole] = mapped_column(
-        default=UserRole.USER, 
-        nullable=False
+        default=UserRole.USER, nullable=False
     )

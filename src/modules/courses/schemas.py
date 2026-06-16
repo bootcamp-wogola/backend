@@ -1,6 +1,7 @@
 from pydantic import BaseModel, ConfigDict, HttpUrl
 from typing import Optional
 
+
 class CourseBase(BaseModel):
     name: str
     provider: str
@@ -9,8 +10,10 @@ class CourseBase(BaseModel):
     link: HttpUrl
     is_free: bool = False
 
+
 class CourseCreate(CourseBase):
     pass
+
 
 class CourseUpdate(BaseModel):
     name: Optional[str] = None
@@ -19,6 +22,7 @@ class CourseUpdate(BaseModel):
     tecnologies: Optional[list[str]] = None
     link: Optional[HttpUrl] = None
     is_free: Optional[bool] = None
+
 
 class CourseResponse(CourseBase):
     id: int
