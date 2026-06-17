@@ -1,10 +1,22 @@
 from sqlalchemy import select
+from sqlalchemy.orm import joinedload
 from .models import User, ProfessionalData
 from src.core.security import get_password_hash
 from src.core.exceptions import Conflict
 
 
 # GET
+async def get_full_user(db, user):
+    result = await db.execute(
+        select(User)
+        .options(joinedload(User.professional_profile))
+        .where(User.id == user.id)
+    )
+    user = result.scalar_one_or_none()
+
+    return user
+
+
 async def get_user_by_id(db, user_id: int):
     return await db.get(User, user_id)
 

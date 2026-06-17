@@ -10,7 +10,7 @@ from alembic import context
 
 
 from src.core.database import Base
-from src.modules.user.model import User
+from src.modules.user.models import User
 from src.modules.courses.model import Courses
 from src.core.settings import get_settings
 

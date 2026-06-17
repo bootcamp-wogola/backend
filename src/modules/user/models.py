@@ -1,5 +1,5 @@
 from datetime import date
-from sqlalchemy import ForeignKey, String, Text, Date
+from sqlalchemy import ForeignKey, String, Text, Date, ARRAY
 from enum import Enum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.core.database import Base
@@ -44,6 +44,9 @@ class ProfessionalData(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'), unique=True)
 
     tech_area: Mapped[str] = mapped_column(nullable=False)
+    technologies: Mapped[list[str]] = mapped_column(
+        ARRAY(String), default=[], nullable=False
+    )
     experience_level: Mapped[str] = mapped_column(nullable=False)
     career_goal: Mapped[str] = mapped_column(nullable=False)
 

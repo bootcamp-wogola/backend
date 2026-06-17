@@ -10,6 +10,7 @@ from .schemas import (
     UserCreate,
     UserGet,
     UserUpdate,
+    UserGetFull,
     ProfessionalDataUpdate,
     ProfessionalDataGet,
     ProfessionalDataBase,
@@ -17,6 +18,17 @@ from .schemas import (
 
 
 user_router = APIRouter(prefix='/users', tags=['Users'])
+
+
+@user_router.get('/me', response_model=UserGetFull)
+async def get_me(
+    db=Depends(get_db), current_user: User = Depends(get_current_user)
+):
+    full_user = await services.get_full_user(db, current_user)
+
+    if full_user:
+        return full_user
+    raise NotFound('User not found')
 
 
 @user_router.get('/{user_id}', response_model=UserGet)

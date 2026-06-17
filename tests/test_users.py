@@ -1,12 +1,8 @@
 import pytest
 
-<<<<<<< HEAD
 from app.core.security import get_password_hash
 from app.modules.user.models import User, UserRole
-=======
-from src.core.security import get_password_hash
-from src.modules.user.model import User, UserRole
->>>>>>> b5272105049f09718847e2199ccf71caed8f8ae7
+
 
 
 async def create_user(session, *, username, email, password, role=UserRole.USER):
