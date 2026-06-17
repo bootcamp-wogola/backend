@@ -34,7 +34,7 @@
     lint = 'ruff check .'
     format = 'ruff format .'
     pos_format = 'ruff check . --fix'
-    run = 'fastapi run src/main.py'
+    run = 'fastapi dev src/main.py'
     pre_tests = 'task format .'
     tests = 'pytest -s -x --cov=src.main -vv'
     deploy = 'fastapi deploy'
