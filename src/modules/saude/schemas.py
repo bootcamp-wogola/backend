@@ -1,10 +1,9 @@
-from pydantic import BaseModel
-
+from pydantic import BaseModel, Field
 
 class SaudeRequest(BaseModel):
     usuario_id: str
     humor: str
-    nota_semanal: int
+    nota_semanal: int = Field(ge=1, le=5)
     contexto: str | None = None
 
 

@@ -7,7 +7,7 @@ client = AsyncGroq(api_key=settings.GROQ_API_KEY)
 
 async def processar_checkin(payload: schemas.SaudeRequest) -> schemas.SaudeResponse:
     humor = payload.humor.lower()
-    derivar_cvv = payload.nota_semanal < 4
+    derivar_cvv = payload.nota_semanal <= 2
 
     if derivar_cvv:
         mensagem = 'Sentimos que você não está bem. Você não está sozinho(a).'
