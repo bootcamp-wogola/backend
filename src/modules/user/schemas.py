@@ -47,7 +47,7 @@ class ProfessionalDataBase(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     tech_area: str
-    technologies : list[str] = []
+    technologies: list[str] = []
     experience_level: str
     career_goal: str
 
@@ -63,7 +63,7 @@ class ProfessionalDataGet(ProfessionalDataBase):
 
 class ProfessionalDataUpdate(BaseModel):
     tech_area: Optional[str] = None
-    tecnologies : Optional[list[str]] = None
+    tecnologies: Optional[list[str]] = None
     experience_level: Optional[str] = None
     career_goal: Optional[str] = None
 

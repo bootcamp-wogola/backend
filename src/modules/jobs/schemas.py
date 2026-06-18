@@ -1,6 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 from typing import Optional
 
+
 class JobBase(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -12,8 +13,10 @@ class JobBase(BaseModel):
     salary_range: Optional[str] = None
     location: str
 
+
 class JobCreate(JobBase):
     pass
+
 
 class JobUpdate(BaseModel):
     title: Optional[str] = None
@@ -24,8 +27,10 @@ class JobUpdate(BaseModel):
     salary_range: Optional[str] = None
     location: Optional[str] = None
 
+
 class JobResponse(JobBase):
     id: int
+
 
 class JobMatchResponse(BaseModel):
     job_details: JobResponse
