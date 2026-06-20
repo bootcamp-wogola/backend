@@ -9,7 +9,7 @@ class JobBase(BaseModel):
     company: str
     description: str
     tech_area: str
-    required_technologies: list[str] = []
+    require_techs: list[str] = []
     salary_range: Optional[str] = None
     location: str
 
@@ -23,7 +23,7 @@ class JobUpdate(BaseModel):
     company: Optional[str] = None
     description: Optional[str] = None
     tech_area: Optional[str] = None
-    required_technologies: Optional[list[str]] = None
+    require_techs: Optional[list[str]] = None
     salary_range: Optional[str] = None
     location: Optional[str] = None
 

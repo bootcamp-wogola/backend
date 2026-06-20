@@ -23,7 +23,7 @@ async def get_matching_jobs(
         {
             'job_details': job,
             'match_percentage': calculate_match(
-                user_techs, job.required_technologies
+                user_techs, job.require_techs
             ),
         }
         for job in jobs
