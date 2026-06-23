@@ -1,6 +1,6 @@
 import asyncio
-from logging.config import fileConfig
 import sys
+from logging.config import fileConfig
 import os
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
@@ -12,6 +12,7 @@ from alembic import context
 from src.core.database import Base
 from src.modules.user.models import User
 from src.modules.courses.model import Courses
+from src.modules.jobs.models import Jobs
 from src.core.settings import get_settings
 
 sys.path.append(os.getcwd())
@@ -21,7 +22,7 @@ settings = get_settings()
 # access to the values within the .ini file in use.
 config = context.config
 
-config.set_main_option('sqlalchemy.url', settings.DATABASE_URL)
+config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -50,12 +51,12 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = config.get_main_option('sqlalchemy.url')
+    url = config.get_main_option("sqlalchemy.url")
     context.configure(
         url=url,
         target_metadata=target_metadata,
         literal_binds=True,
-        dialect_opts={'paramstyle': 'named'},
+        dialect_opts={"paramstyle": "named"},
     )
 
     with context.begin_transaction():
@@ -77,7 +78,7 @@ async def run_async_migrations() -> None:
 
     connectable = async_engine_from_config(
         config.get_section(config.config_ini_section, {}),
-        prefix='sqlalchemy.',
+        prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
 
@@ -90,7 +91,16 @@ async def run_async_migrations() -> None:
 def run_migrations_online() -> None:
     """Run migrations in 'online' mode."""
 
-    asyncio.run(run_async_migrations())
+    if sys.platform == "win32":
+        # psycopg em modo assíncrono não funciona com o ProactorEventLoop,
+        # que é o padrão no Windows. Forçamos o SelectorEventLoop só aqui,
+        # restrito ao Windows, para não afetar Linux/Mac.
+        asyncio.run(
+            run_async_migrations(),
+            loop_factory=asyncio.SelectorEventLoop,
+        )
+    else:
+        asyncio.run(run_async_migrations())
 
 
 if context.is_offline_mode():
