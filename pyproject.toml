@@ -14,8 +14,8 @@
         "sqlalchemy (>=2.0.50,<3.0.0)",
         "alembic (>=1.18.4,<2.0.0)",
         "aiosqlite (>=0.22.1,<0.23.0)",
-        "myapplication (>=0.1.0,<0.2.0)",
         "groq (>=1.4.0,<2.0.0)",
+        "pydantic (>=2.13.4,<3.0.0)",
     ]
 
 
@@ -30,6 +30,9 @@
         "taskipy (>=1.14.1,<2.0.0)",
         "ruff (>=0.15.17,<0.16.0)"
     ]
+
+    [tool.poetry]
+        package-mode = false
 
     [tool.taskipy.tasks]
     lint = 'ruff check .'
