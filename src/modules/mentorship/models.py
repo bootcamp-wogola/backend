@@ -2,7 +2,7 @@ import enum
 from datetime import datetime
 from sqlalchemy import String, Text, Enum as SQLEnum
 from sqlalchemy.orm import Mapped, mapped_column
-from core.database import Base
+from ...core.database import Base
 
 
 class MentorshipType(str, enum.Enum):

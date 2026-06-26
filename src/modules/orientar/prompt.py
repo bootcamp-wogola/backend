@@ -5,11 +5,15 @@ def obter_prompt_orientacao(
     regiao: str,
     vagas: list,
 ) -> str:
-    vagas_txt = "\n".join(
-        f"- {vaga['job_details'].title} | requisitos: {', '.join(vaga['job_details'].require_techs)} "
-        f"| compatibilidade: {vaga['match_percentage']}%"
-        for vaga in vagas
-    ) if vagas else "Nenhuma vaga encontrada."
+    vagas_txt = (
+        '\n'.join(
+            f'- {vaga["job_details"].title} | requisitos: {", ".join(vaga["job_details"].require_techs)} '
+            f'| compatibilidade: {vaga["match_percentage"]}%'
+            for vaga in vagas
+        )
+        if vagas
+        else 'Nenhuma vaga encontrada.'
+    )
 
     return f"""Você é o agente de inteligência artificial do App BiT, uma plataforma de apoio voltada para a inclusão e aceleração de pessoas de grupos sub-representados na tecnologia. Sua missão é fornecer uma orientação de carreira empática, encorajadora, direta e acionável.
 

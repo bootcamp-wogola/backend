@@ -13,6 +13,7 @@ from src.core.database import Base
 from src.modules.user.models import User
 from src.modules.courses.model import Courses
 from src.modules.jobs.models import Jobs
+from src.modules.mentorship.models import  Mentorship, MentorshipType, MentorshipStatus
 from src.core.settings import get_settings
 
 sys.path.append(os.getcwd())

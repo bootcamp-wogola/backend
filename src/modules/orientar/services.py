@@ -33,8 +33,10 @@ def _parse_resposta_ia(resposta: str) -> dict:
             'A IA retornou um formato inválido. Tente novamente.'
         )
 
+
 def _contar_vagas_compativeis(vagas: list) -> int:
     return sum(1 for item in vagas if item['match_percentage'] > 0)
+
 
 async def gerar_orientacao(
     session: AsyncSession,

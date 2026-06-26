@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 
+
 class OrientarResponse(BaseModel):
     gap_percentual: int = Field(..., ge=0, le=100)
     gap_itens: list[str]
