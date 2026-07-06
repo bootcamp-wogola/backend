@@ -7,6 +7,7 @@ from jose.exceptions import JWTError
 from pwdlib import PasswordHash
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 from src.modules.user.models import User, UserRole
 from .database import get_db
 from .settings import get_settings
@@ -72,7 +73,9 @@ async def get_current_user(
             raise invalid_token_exception
 
         user = await session.scalar(
-            select(User).where(User.email == token_email)
+            select(User)
+            .where(User.email == token_email)
+            .options(selectinload(User.professional_profile))
         )
         if not user:
             raise invalid_token_exception

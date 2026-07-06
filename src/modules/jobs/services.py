@@ -29,7 +29,15 @@ async def get_matching_jobs(session: AsyncSession, user_area: str, user_techs: l
 
 
 async def create_job(session: AsyncSession, job_in: JobCreate) -> Jobs:
-    new_job = Jobs(**job_in.model_dump())
+    new_job = Jobs(
+        title=job_in.title,
+        company=job_in.company,
+        description=job_in.description,
+        tech_area=job_in.tech_area,
+        require_techs=job_in.required_technologies,
+        salary_range=job_in.salary_range,
+        location=job_in.location,
+    )
     session.add(new_job)
     await session.commit()
     await session.refresh(new_job)
