@@ -2,6 +2,8 @@ from datetime import date
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
 from typing import Optional
 
+from src.modules.jobs.schemas import JobMatchResponse
+
 
 class UserBase(BaseModel):
     model_config = ConfigDict(from_attributes=True, validate_assignment=True)
@@ -39,10 +41,6 @@ class UserList(BaseModel):
     users: list[UserGet]
 
 
-class UserGetFull(UserGet):
-    professional_profile: Optional[ProfessionalDataGet] = None
-
-
 class ProfessionalDataBase(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -60,10 +58,13 @@ class ProfessionalDataGet(ProfessionalDataBase):
     id: int
     user_id: int
 
+class UserGetFull(UserGet):
+    professional_profile: Optional[ProfessionalDataGet] = None
+
 
 class ProfessionalDataUpdate(BaseModel):
     tech_area: Optional[str] = None
-    tecnologies : Optional[list[str]] = None
+    technologies : Optional[list[str]] = None
     experience_level: Optional[str] = None
     career_goal: Optional[str] = None
 
@@ -90,18 +91,3 @@ class HealthCheckUpdate(BaseModel):
     score: Optional[int] = Field(None, ge=1, le=5)
     context: Optional[str] = None
 
-
-class OrientationResponse(BaseModel):
-    gap_percentage: int
-    gap_items: list[str]
-    suggested_track: str
-    compatible_jobs: int
-    confidence: float
-
-
-class HealthResponse(BaseModel):
-    message: str
-    suggested_action: str
-    refer_to_cvv: bool
-    current_score: int
-    alert: bool
