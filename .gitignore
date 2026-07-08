@@ -16,7 +16,6 @@ pip-delete-this-directory.txt
 .ruff_cache/
 .poetry/
 dist/
-poetry.lock
 *.db
 *.db-journal
 *.sqlite3
