@@ -8,6 +8,7 @@ from src.core.settings import get_settings
 settings = get_settings()
 client = AsyncGroq(api_key=settings.GROQ_API_KEY)
 
+
 async def processar_checkin(
     payload: schemas.HealthRequest,
     current_user: User,

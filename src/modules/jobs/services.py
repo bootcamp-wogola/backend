@@ -7,25 +7,29 @@ from .schemas import JobCreate, JobUpdate
 def calculate_match(user_techs: list[str], job_techs: list[str]) -> int:
     if not job_techs:
         return 100
-        
+
     intersection = set(user_techs).intersection(job_techs)
     return int((len(intersection) / len(job_techs)) * 100)
 
 
-async def get_matching_jobs(session: AsyncSession, user_area: str, user_techs: list[str]):
+async def get_matching_jobs(
+    session: AsyncSession, user_area: str, user_techs: list[str]
+):
     query = select(Jobs).where(Jobs.tech_area == user_area)
     result = await session.execute(query)
     jobs = result.scalars().all()
 
     matched_jobs = [
         {
-            "job_details": job,
-            "match_percentage": calculate_match(user_techs, job.required_technologies)
+            'job_details': job,
+            'match_percentage': calculate_match(user_techs, job.require_techs),
         }
         for job in jobs
     ]
 
-    return sorted(matched_jobs, key=lambda x: x["match_percentage"], reverse=True)
+    return sorted(
+        matched_jobs, key=lambda x: x['match_percentage'], reverse=True
+    )
 
 
 async def create_job(session: AsyncSession, job_in: JobCreate) -> Jobs:
@@ -49,7 +53,9 @@ async def get_job_by_id(session: AsyncSession, job_id: int) -> Jobs | None:
     return result.scalar_one_or_none()
 
 
-async def update_job(session: AsyncSession, job_id: int, job_in: JobUpdate) -> Jobs | None:
+async def update_job(
+    session: AsyncSession, job_id: int, job_in: JobUpdate
+) -> Jobs | None:
     job = await get_job_by_id(session, job_id)
     if not job:
         return None

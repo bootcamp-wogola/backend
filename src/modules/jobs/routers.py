@@ -16,7 +16,7 @@ jobs_router = APIRouter(prefix='/jobs', tags=['Jobs'])
 @jobs_router.get('/matching', response_model=list[JobMatchResponse])
 async def get_matching_jobs(
     session: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
     full_user = await get_full_user(session, current_user)
 
@@ -26,17 +26,19 @@ async def get_matching_jobs(
     matched_jobs = await services.get_matching_jobs(
         session,
         user_area=full_user.professional_profile.tech_area,
-        user_techs=full_user.professional_profile.technologies
+        user_techs=full_user.professional_profile.technologies,
     )
-    
+
     return matched_jobs
 
 
-@jobs_router.post('/', response_model=JobResponse, status_code=status.HTTP_201_CREATED)
+@jobs_router.post(
+    '/', response_model=JobResponse, status_code=status.HTTP_201_CREATED
+)
 async def create_job(
     job_in: JobCreate,
     session: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
     return await services.create_job(session, job_in)
 
@@ -46,11 +48,13 @@ async def update_job(
     job_id: int,
     job_in: JobUpdate,
     session: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
     job = await services.update_job(session, job_id, job_in)
     if not job:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Job not found')
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail='Job not found'
+        )
     return job
 
 
@@ -58,8 +62,10 @@ async def update_job(
 async def delete_job(
     job_id: int,
     session: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
     success = await services.delete_job(session, job_id)
     if not success:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Job not found')
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail='Job not found'
+        )

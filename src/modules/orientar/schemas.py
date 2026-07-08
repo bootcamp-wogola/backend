@@ -1,9 +1,9 @@
-from pydantic import BaseModel
-from src.modules.jobs.schemas import JobMatchResponse
+from pydantic import BaseModel, Field
 
-class OrientationResponse(BaseModel):
-    gap_percentage: int
-    gap_items: list[str]
-    suggested_track: str
-    compatible_jobs: list[JobMatchResponse]
-    confidence: float
+
+class OrientarResponse(BaseModel):
+    gap_percentual: int = Field(..., ge=0, le=100)
+    gap_itens: list[str]
+    trilha_sugerida: str
+    vagas_compativeis: int
+    confianca: float = Field(..., ge=0.0, le=1.0)
